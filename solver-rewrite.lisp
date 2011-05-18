@@ -1,4 +1,4 @@
-
+ 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Expermental results code
 (defparameter nodes-explored* 0)
@@ -1189,7 +1189,7 @@
 	(t
 	 (warn "Failed to select bindings for the top level problem.")
 	 (setq active-problem* nil))))
-)
+
 
 ;;Store appropriate context in parent and return to the root problem.
 (defun backtrack-to-root-problem (problem)
