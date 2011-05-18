@@ -1174,30 +1174,62 @@
 	     (setq return-value (cons nil (second selected-match))))))
     return-value))
 
-;; This function takes a problem and returns the problems highest parent (the root)
-(defun root-problem (current-problem)
-  (if (problem-i-parent current-problem)
-      (root-problem (intention-problem-parent (problem-i-parent current-problem)))
-    (current-problem)))
+;;Store appropriate context in parent and pop-up to parent problem.
+(defun backtrack-to-parent-problem (problem)
+  (cond ((problem-i-parent problem)
+	 (print "Storing failure context and backtracking to parent.")
+	 (setq active-problem* (intention-problem-parent (problem-i-parent problem)))
+	 (create-and-store-failure-context (problem-bindings active-problem*)
+					   (problem-focus active-problem*)
+					   (problem-intention active-problem*))
+	 (setf (problem-bindings active-problem*) nil)
+	 (setf (problem-bindings-selected? active-problem*) nil)
+	 (incf nodes-failed*)
+	 )
+	(t
+	 (warn "Failed to select bindings for the top level problem.")
+	 (setq active-problem* nil))))
+)
+
+;;Store appropriate context in parent and return to the root problem.
+(defun backtrack-to-root-problem (problem)
+  (cond ((problem-i-parent problem)
+	 (print "Storing failure context and backtracking to root.")
+	 (setq active-problem* (intention-problem-parent (problem-i-parent problem)))
+	 (create-and-store-failure-context (problem-bindings active-problem*)
+					   (problem-focus active-problem*)
+					   (problem-intention active-problem*))
+	 (setf (problem-bindings active-problem*) nil)
+	 (setf (problem-bindings-selected? active-problem*) nil)
+	 (incf nodes-failed*)
+	 (backtrack-to-root-problem-rec active-problem*)
+	 )
+	(t
+	 (warn "Failed to select bindings for the top level problem.")
+	 (setq active-problem* nil))))
+
+;;resets all the bindings to nil and sets the active problem to the root problem
+(defun backtrack-to-root-problem-rec (problem)
+  (cond ((problem-i-parent problem)
+	 (setq active-problem* (intention-problem-parent (problem-i-parent problem)))
+	 (setf (problem-bindings active-problem*) nil)
+	 (setf (problem-bindings-selected? active-problem*) nil)
+	 (backtrack-to-root-problem-rec active-problem*))
+	(t
+	 nil)))    
+
+
 
 (defun process-select-bindings-result (problem result)
   (cond ((null result)
-	 ;;This means failure. Store appropriate context in parent and pop-up.
-	 (print "Failed to select bindings for the current problem. Backtracking.")
-	 (cond ((problem-i-parent problem)
-		(setq active-problem* (intention-problem-parent (problem-i-parent problem)))
-		(create-and-store-failure-context (problem-bindings active-problem*)
-						  (problem-focus active-problem*)
-						  (problem-intention active-problem*))
-		(setq active-problem* (root-problem active-problem*))
-		(setf (problem-bindings active-problem*) nil)
-		(setf (problem-bindings-selected? active-problem*) nil)
-		(incf nodes-failed*)
-		)
-	       (t
-		(warn "Failed to select bindings for the top level problem.")
-		(setq active-problem* nil))))
-	     
+	 ;;This means failure
+	 (print "Failed to select bindings for the current problem. ")
+
+	 ;;Select a backtracking mechanism here (backtrack to parent or to root).
+	 ;;Backtracking to the root can be used for iterative sampling.
+	 ;(backtrack-to-parent-problem problem))
+	 (backtrack-to-root-problem problem))
+	
 	((null (car result))
 	 ;; This means that bindings were successfully found for a problem that has unsatisfied goals.
 	 (cond ((not (repeated-problem? problem 
