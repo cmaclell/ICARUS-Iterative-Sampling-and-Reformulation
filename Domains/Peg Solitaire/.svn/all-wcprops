@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Peg%20Solitaire
+END
+PegCon.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Peg%20Solitaire/PegCon.lisp
+END
+loader-peg.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Peg%20Solitaire/loader-peg.lisp
+END
+PegEnv.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Peg%20Solitaire/PegEnv.lisp
+END

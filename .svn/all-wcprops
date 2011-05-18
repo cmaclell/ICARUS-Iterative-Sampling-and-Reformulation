@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/138/branches/icarus-v3.1
+END
+solver-rewrite.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/138/branches/icarus-v3.1/solver-rewrite.lisp
+END
+changed.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/133/branches/icarus-v3.1/changed.lisp
+END
+StanfordCompatible.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/133/branches/icarus-v3.1/StanfordCompatible.lisp
+END
+Issues.docx
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/135/branches/icarus-v3.1/Issues.docx
+END
+holdover.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/133/branches/icarus-v3.1/holdover.lisp
+END
+matcher.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/133/branches/icarus-v3.1/matcher.lisp
+END
+List of Inference module dependencies.txt
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/133/branches/icarus-v3.1/List%20of%20Inference%20module%20dependencies.txt
+END
+loader.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/133/branches/icarus-v3.1/loader.lisp
+END
+icarus.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/133/branches/icarus-v3.1/icarus.lisp
+END
+UnusedMatchingFunctions.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/133/branches/icarus-v3.1/UnusedMatchingFunctions.lisp
+END
+Unification.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/133/branches/icarus-v3.1/Unification.lisp
+END

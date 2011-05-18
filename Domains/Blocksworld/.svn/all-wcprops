@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/134/branches/icarus-v3.1/Domains/Blocksworld
+END
+loader-blocks.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/134/branches/icarus-v3.1/Domains/Blocksworld/loader-blocks.lisp
+END
+Block-Sussman.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/134/branches/icarus-v3.1/Domains/Blocksworld/Block-Sussman.lisp
+END
+pprint-block-state.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Blocksworld/pprint-block-state.lisp
+END
+Block-RW-Strips.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Blocksworld/Block-RW-Strips.lisp
+END
+BlockEnv.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/134/branches/icarus-v3.1/Domains/Blocksworld/BlockEnv.lisp
+END
+Constraints.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Blocksworld/Constraints.lisp
+END

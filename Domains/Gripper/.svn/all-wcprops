@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Gripper
+END
+loader-gripper.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Gripper/loader-gripper.lisp
+END
+gripper-env.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Gripper/gripper-env.lisp
+END
+gripperproblemgenerator.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Gripper/gripperproblemgenerator.lisp
+END
+temp-setup.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Gripper/temp-setup.lisp
+END
+gripper-con.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Gripper/gripper-con.lisp
+END

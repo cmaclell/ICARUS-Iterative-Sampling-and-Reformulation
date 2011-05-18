@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Subtraction
+END
+subcon.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Subtraction/subcon.lisp
+END
+loader-sub.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Subtraction/loader-sub.lisp
+END
+subenv-orig.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Subtraction/subenv-orig.lisp
+END
+subenv.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Subtraction/subenv.lisp
+END
+sub1-orig.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Subtraction/sub1-orig.lisp
+END

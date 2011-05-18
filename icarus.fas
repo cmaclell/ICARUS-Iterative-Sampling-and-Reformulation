@@ -1,0 +1,26 @@
+(|SYSTEM|::|VERSION| '(20080430.))
+#0Y_ #0Y |CHARSET|::|UTF-8|
+#Y(#:|1 10 (LOAD "holdover.lisp")-1|
+   #15Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 19 01)
+   ("holdover.lisp" |COMMON-LISP|::|LOAD|)
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|11 11 (LOAD "changed.lisp")-2|
+   #15Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 19 01)
+   ("changed.lisp" |COMMON-LISP|::|LOAD|)
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|13 13 (LOAD "matcher")-3|
+   #15Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 19 01)
+   ("matcher" |COMMON-LISP|::|LOAD|)
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|14 14 (LOAD "StanfordCompatible")-4|
+   #15Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 19 01)
+   ("StanfordCompatible" |COMMON-LISP|::|LOAD|)
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|16 16 (LOAD "Unification")-5|
+   #15Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 19 01)
+   ("Unification" |COMMON-LISP|::|LOAD|)
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|16 17 (LOAD "solver-rewrite")-6|
+   #15Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 19 01)
+   ("solver-rewrite" |COMMON-LISP|::|LOAD|)
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))

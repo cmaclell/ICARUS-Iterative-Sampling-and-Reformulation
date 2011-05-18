@@ -1,0 +1,6 @@
+Solver-rewrite uses the following functions from Matcher/StanfordCompatible:
+	- (subst-bindings ...)
+	- (bmatches ...)
+
+(*drive) function in depots-env uses (cassoc) and depends on the existing structure of concepts and beliefs.
+Some of the functions make a direct use of cstm*. Also the function (find-matching-concept-for-focus focus) matches against cltm* to find a concept to chain on and relies on the existing structure of concepts.

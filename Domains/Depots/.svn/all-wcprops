@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Depots
+END
+depots-con.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Depots/depots-con.lisp
+END
+loader-depots.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Depots/loader-depots.lisp
+END
+temp-setup.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Depots/temp-setup.lisp
+END
+depots-env.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Depots/depots-env.lisp
+END
+depotsproblemgenerator.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Depots/depotsproblemgenerator.lisp
+END

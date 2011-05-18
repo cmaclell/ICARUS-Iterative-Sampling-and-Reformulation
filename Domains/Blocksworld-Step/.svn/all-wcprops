@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Blocksworld-Step
+END
+Block-RW-Step.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Blocksworld-Step/Block-RW-Step.lisp
+END
+BlockEnv-Step.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Blocksworld-Step/BlockEnv-Step.lisp
+END
+loader-step.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Blocksworld-Step/loader-step.lisp
+END

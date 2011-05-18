@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Logistics
+END
+logistics-con.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Logistics/logistics-con.lisp
+END
+temp-setup.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Logistics/temp-setup.lisp
+END
+loader-logistics.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Logistics/loader-logistics.lisp
+END
+logistics-env.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Logistics/logistics-env.lisp
+END
+Constraints.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Logistics/Constraints.lisp
+END
+logisticsproblemgenerator.lisp
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/!svn/ver/133/branches/icarus-v3.1/Domains/Logistics/logisticsproblemgenerator.lisp
+END
