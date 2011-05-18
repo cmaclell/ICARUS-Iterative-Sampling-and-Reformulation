@@ -1,4 +1,4 @@
- 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Expermental results code
 (defparameter nodes-explored* 0)
@@ -45,13 +45,13 @@
 (defun select-active-problem ()
   (when (not active-problem*)
     (loop with unsatisfied-problem-found? = nil
-	  for problem in gstm*
-	  while (not unsatisfied-problem-found?)
-	  do
-	  (when (not (problem-satisfied-with-bindings problem))
-	    (setq active-problem* problem)
-	    (setq unsatisfied-problem-found? t)))))
-	
+       for problem in gstm*
+       while (not unsatisfied-problem-found?)
+       do
+	 (when (not (problem-satisfied-with-bindings problem))
+	   (setq active-problem* problem)
+	   (setq unsatisfied-problem-found? t)))))
+
 (defun solve (active-problem executing-intention) 
   ;; Expect Problem to be an active Problem that is not satisfied, and executing-intention is an "Executing Intention" or NIL
   (print-problem-and-exec-intent active-problem executing-intention)
@@ -74,9 +74,9 @@
   (unless pat-trace* 
     (format t "~%Call to SOLVE:"))
   (when problem-solver-enabled*
-  (cond (active-problem
-	 (format t "~%  Active Problem:")
-	 (pprint-problem active-problem))
+    (cond (active-problem
+	   (format t "~%  Active Problem:")
+	   (pprint-problem active-problem))
 	  (t (format t "~%  Active Problem: NIL"))))
   (cond (executing-intention
 	 (if pat-trace*
@@ -110,7 +110,7 @@
   disjunctive-goal-list?              ;;denotes if a problem has a set of disjunctive goals.
   visited-states                      ;;stores a list of visited states. Instantiated in the top level problem only.
   repeating-intentions)                   ;;stores a list of repeating intentions. Instantiated in the top level problem only.
- 
+
 
 (defstruct goal 
   objective 
@@ -129,14 +129,14 @@
 	     new-problem)
        (push new-goal (problem-goals new-problem))
      finally
-     (setf (problem-objectives new-problem)
-	   (loop for goal in (problem-goals new-problem)
-	      collect (goal-objective goal)))
-     (setf (problem-pos-objectives new-problem)
-	   (collect-pos-conditions (problem-objectives new-problem)))
-     (setf (problem-neg-objectives new-problem)
-	   (collect-neg-conditions (problem-objectives new-problem)))
-     (return new-problem)))
+       (setf (problem-objectives new-problem)
+	     (loop for goal in (problem-goals new-problem)
+		collect (goal-objective goal)))
+       (setf (problem-pos-objectives new-problem)
+	     (collect-pos-conditions (problem-objectives new-problem)))
+       (setf (problem-neg-objectives new-problem)
+	     (collect-neg-conditions (problem-objectives new-problem)))
+       (return new-problem)))
 
 (defun pprint-problem (problem
 		       &key
@@ -147,41 +147,41 @@
   (when problem
     (format t "~%~aPROBLEM:" indent)
     (loop for selector in selectors
-	  do
-	  (case selector
-	    (:objectives (format t "~%~a  Objectives: ~a" 
+       do
+	 (case selector
+	   (:objectives (format t "~%~a  Objectives: ~a" 
+				indent
+				(if subst-bindings? 
+				    (subst-bindings (problem-bindings problem)
+						    (problem-objectives problem))
+				    (problem-objectives problem))))
+	   (:bindings (format t "~%~a  Bindings: ~a" 
+			      indent
+			      (problem-bindings problem)))
+	   (:bindings-selected?  (format t "~%~a  Bindings-selected?: ~a" 
+					 indent
+					 (problem-bindings-selected? problem)))
+	   (:target-goals (format t "~%~a  Target-Goals: ~a" 
+				  indent
+				  (if subst-bindings?
+				      (subst-bindings (problem-bindings problem)
+						      (problem-target-goals problem))
+				      (problem-target-goals problem))))
+	   (:focus (format t "~%~a  Focus: ~a" 
+			   indent
+			   (if subst-bindings? 
+			       (subst-bindings (problem-bindings problem)
+					       (problem-focus problem))
+			       (problem-focus problem))))
+	   (:intention (let ((short-intention (if (problem-intention problem)
+						  (intention-head (problem-intention problem))
+						  nil)))
+			 (format t "~%~a  Intention: ~a" 
 				 indent
 				 (if subst-bindings? 
 				     (subst-bindings (problem-bindings problem)
-						     (problem-objectives problem))
-				     (problem-objectives problem))))
-	    (:bindings (format t "~%~a  Bindings: ~a" 
-			       indent
-			       (problem-bindings problem)))
-	    (:bindings-selected?  (format t "~%~a  Bindings-selected?: ~a" 
-					  indent
-					  (problem-bindings-selected? problem)))
-	    (:target-goals (format t "~%~a  Target-Goals: ~a" 
-				   indent
-				   (if subst-bindings?
-				       (subst-bindings (problem-bindings problem)
-						       (problem-target-goals problem))
-				       (problem-target-goals problem))))
-	    (:focus (format t "~%~a  Focus: ~a" 
-			    indent
-			    (if subst-bindings? 
-				(subst-bindings (problem-bindings problem)
-						(problem-focus problem))
-				(problem-focus problem))))
-	    (:intention (let ((short-intention (if (problem-intention problem)
-						   (intention-head (problem-intention problem))
-						   nil)))
-			  (format t "~%~a  Intention: ~a" 
-				  indent
-				  (if subst-bindings? 
-				      (subst-bindings (problem-bindings problem)
-						      short-intention)
-				      short-intention))))))))
+						     short-intention)
+				     short-intention))))))))
 
 (defun collect-pos-conditions (condition-list)
   (loop for condition in condition-list
@@ -226,7 +226,7 @@
   tests
   successful-subskill-executions
   failed-subskill-executions
- )
+  )
 
 (defmacro create-skills (&rest skills)
   `(let ((skills (quote ,skills))
@@ -261,13 +261,13 @@
 		       :action (quote-constants action))) ; check out / find out what this does 
       ;; do keywords need to be quoted below?
       (cond ((eq next-field ':percepts)(setq percepts next-spec))
-	      ((eq next-field ':id)(setq id next-spec))
-	      ((eq next-field ':tests)(setq tests next-spec))
-	      ((eq next-field ':conditions)(setq conditions next-spec))
-	      ((eq next-field ':effects)(setq effects next-spec))
-	      ((eq next-field ':subskills)(setq subskills next-spec))
-	      ((eq next-field ':action)(setq action next-spec))
-	      (t (print-error next-field "field" "skill")))
+	    ((eq next-field ':id)(setq id next-spec))
+	    ((eq next-field ':tests)(setq tests next-spec))
+	    ((eq next-field ':conditions)(setq conditions next-spec))
+	    ((eq next-field ':effects)(setq effects next-spec))
+	    ((eq next-field ':subskills)(setq subskills next-spec))
+	    ((eq next-field ':action)(setq action next-spec))
+	    (t (print-error next-field "field" "skill")))
       (setq skill (cddr skill)))))
 
 (defun create-intention (skill bindings &optional execution-flag)
@@ -339,44 +339,44 @@
     (format t "~%~aINTENTION:" indent)
     (loop for selector in selectors
        do
-       (case selector
-	 (:head (format t "~%~a   Head: ~a" indent
+	 (case selector
+	   (:head (format t "~%~a   Head: ~a" indent
+			  (if subst-bindings? 
+			      (subst-bindings (intention-bindings intention)
+					      (intention-head intention))
+			      (intention-head intention))))
+	   (:bindings (format t "~%~a   Bindings: ~a" indent
+			      (intention-bindings intention)))
+	   (:subskills (format t "~%~a   Subskills: ~a" indent
+			       (if subst-bindings? 
+				   (subst-bindings (intention-bindings intention)
+						   (intention-subskills intention))
+				   (intention-subskills intention))))
+	   (:remaining-subskills (format t "~%~a   Remaining-Subskills: ~a" indent
+					 (if subst-bindings? 
+					     (subst-bindings (intention-bindings intention)
+							     (intention-remaining-subskills intention))
+					     (intention-remaining-subskills intention))))
+	   (:conditions (format t "~%~a   Conditions: ~a" indent
 				(if subst-bindings? 
 				    (subst-bindings (intention-bindings intention)
-						    (intention-head intention))
-				    (intention-head intention))))
-	 (:bindings (format t "~%~a   Bindings: ~a" indent
-			    (intention-bindings intention)))
-	 (:subskills (format t "~%~a   Subskills: ~a" indent
-			     (if subst-bindings? 
-				 (subst-bindings (intention-bindings intention)
-						 (intention-subskills intention))
-				 (intention-subskills intention))))
-	 (:remaining-subskills (format t "~%~a   Remaining-Subskills: ~a" indent
-				       (if subst-bindings? 
-					   (subst-bindings (intention-bindings intention)
-							   (intention-remaining-subskills intention))
-					   (intention-remaining-subskills intention))))
-	 (:conditions (format t "~%~a   Conditions: ~a" indent
+						    (intention-conditions intention))
+				    (intention-conditions intention))))
+	   (:effects  (format t "~%~a   Effects: ~a" indent
 			      (if subst-bindings? 
 				  (subst-bindings (intention-bindings intention)
-						  (intention-conditions intention))
-				  (intention-conditions intention))))
-	 (:effects  (format t "~%~a   Effects: ~a" indent
-			    (if subst-bindings? 
-				(subst-bindings (intention-bindings intention)
-						(intention-effects intention))
-				(intention-effects intention))))
-	 (:targets  (format t "~%~a   Targets: ~a" indent
-			    (if subst-bindings? 
-				(subst-bindings (intention-bindings intention)
-						(intention-targets intention))
-				(intention-targets intention))))
-	 (:action  (format t "~%~a   Action: ~a" indent
-			   (if subst-bindings? 
-			       (qsubst-bindings (intention-bindings intention)
-						(intention-action intention))
-			       (intention-action intention))))))))
+						  (intention-effects intention))
+				  (intention-effects intention))))
+	   (:targets  (format t "~%~a   Targets: ~a" indent
+			      (if subst-bindings? 
+				  (subst-bindings (intention-bindings intention)
+						  (intention-targets intention))
+				  (intention-targets intention))))
+	   (:action  (format t "~%~a   Action: ~a" indent
+			     (if subst-bindings? 
+				 (qsubst-bindings (intention-bindings intention)
+						  (intention-action intention))
+				 (intention-action intention))))))))
 
 (defun pprint-pat-intention (intention
 			     &key
@@ -389,48 +389,48 @@
       (format t "~%~aINTENTION:" indent))
     (loop for selector in selectors
        do
-       (case selector
-	 (:head (format t "~%~a   Head: ~a" indent
-			(if subst-bindings? 
-			    (subst-bindings (intention-bindings intention)
-					    (intention-head intention))
-			    (intention-head intention))))
-	 (:bindings (format t "~%~a   Bindings: ~a" indent
-			    (intention-bindings intention)))
-	 (:subskills (when (intention-subskills intention)
-		       (format t "~%~a   Subskills: ~a" indent
-			       (insert-caret (- (length (intention-subskills intention))
-						(length (intention-remaining-subskills intention)))
-					     (if subst-bindings? 
-						 (subst-bindings (intention-bindings intention)
-								 (intention-subskills intention))
-						 (intention-subskills intention))))))
-	 (:remaining-subskills (format t "~%~a   Remaining-Subskills: ~a" indent
-				       (if subst-bindings? 
-					   (subst-bindings (intention-bindings intention)
-							   (intention-remaining-subskills intention))
-					   (intention-remaining-subskills intention))))
-	 (:conditions (format t "~%~a   Conditions: ~a" indent
+	 (case selector
+	   (:head (format t "~%~a   Head: ~a" indent
+			  (if subst-bindings? 
+			      (subst-bindings (intention-bindings intention)
+					      (intention-head intention))
+			      (intention-head intention))))
+	   (:bindings (format t "~%~a   Bindings: ~a" indent
+			      (intention-bindings intention)))
+	   (:subskills (when (intention-subskills intention)
+			 (format t "~%~a   Subskills: ~a" indent
+				 (insert-caret (- (length (intention-subskills intention))
+						  (length (intention-remaining-subskills intention)))
+					       (if subst-bindings? 
+						   (subst-bindings (intention-bindings intention)
+								   (intention-subskills intention))
+						   (intention-subskills intention))))))
+	   (:remaining-subskills (format t "~%~a   Remaining-Subskills: ~a" indent
+					 (if subst-bindings? 
+					     (subst-bindings (intention-bindings intention)
+							     (intention-remaining-subskills intention))
+					     (intention-remaining-subskills intention))))
+	   (:conditions (format t "~%~a   Conditions: ~a" indent
+				(if subst-bindings? 
+				    (subst-bindings (intention-bindings intention)
+						    (intention-conditions intention))
+				    (intention-conditions intention))))
+	   (:effects  (format t "~%~a   Effects: ~a" indent
 			      (if subst-bindings? 
 				  (subst-bindings (intention-bindings intention)
-						  (intention-conditions intention))
-				  (intention-conditions intention))))
-	 (:effects  (format t "~%~a   Effects: ~a" indent
-			    (if subst-bindings? 
-				(subst-bindings (intention-bindings intention)
-						(intention-effects intention))
-				(intention-effects intention))))
-	 (:targets  (format t "~%~a   Targets: ~a" indent
-			    (if subst-bindings? 
-				(subst-bindings (intention-bindings intention)
-						(intention-targets intention))
-				(intention-targets intention))))
-	 (:action (when (intention-action intention)
-		    (format t "~%~a   Action: ~a" indent
-			    (if subst-bindings? 
-				(qsubst-bindings (intention-bindings intention)
-						 (intention-action intention))
-				(intention-action intention)))))))))
+						  (intention-effects intention))
+				  (intention-effects intention))))
+	   (:targets  (format t "~%~a   Targets: ~a" indent
+			      (if subst-bindings? 
+				  (subst-bindings (intention-bindings intention)
+						  (intention-targets intention))
+				  (intention-targets intention))))
+	   (:action (when (intention-action intention)
+		      (format t "~%~a   Action: ~a" indent
+			      (if subst-bindings? 
+				  (qsubst-bindings (intention-bindings intention)
+						   (intention-action intention))
+				  (intention-action intention)))))))))
 
 (defun insert-caret (pos list)
   (append (subseq list 0 pos)
@@ -444,11 +444,11 @@
 	 (cond (pat-trace* 
 		(format t "~%Setting Current Intention:")
 		(pprint-pat-intention intention)
-		;(format t "~%Setting Executing Intention to be: ~a"
-		;          (intention-head-with-bindings intention)))
+					;(format t "~%Setting Executing Intention to be: ~a"
+					;          (intention-head-with-bindings intention)))
 		)
 	       (t
-	 (format t "~%Setting Executing-Intention* to be:")
+		(format t "~%Setting Executing-Intention* to be:")
 		(pprint-intention intention))))
 	(t (unless pat-trace*  
 	     (format t "~%Setting Executing-Intention* to be: NIL")))))
@@ -479,7 +479,7 @@
      for match-result = (bmatches pos-goal-literal belief nil)
      when (first match-result)
      collect
-     (rest match-result)))
+       (rest match-result)))
 
 ;; returns a list of all possible bindings that satisfy the literals.
 ;; this takes literals in any order (it separates the positive and negative bindings)
@@ -495,7 +495,7 @@
   (cond ((null pos-literals)
 	 (if (loop for neg-literal in (subst-bindings start-bindings neg-literals)
 		always
-		(first (satisfied neg-literal cstm)))
+		  (first (satisfied neg-literal cstm)))
 	     (list start-bindings)
 	     nil))
 	(t
@@ -503,10 +503,10 @@
 									    (first pos-literals))
 							    cstm)
 	    append
-	    (find-all-match-bindings-for-sorted-literals (rest pos-literals) 
-							 neg-literals
-							 (append add-bindings start-bindings)
-							 cstm)))))
+	      (find-all-match-bindings-for-sorted-literals (rest pos-literals) 
+							   neg-literals
+							   (append add-bindings start-bindings)
+							   cstm)))))
 
 ;; version of next function that presorts pos and neg literals
 ;; Returns T or NIL
@@ -523,16 +523,16 @@
   (cond ((null pos-literals)
 	 (loop for neg-literal in (subst-bindings start-bindings neg-literals)
 	    always
-	    (first (satisfied neg-literal cstm))))
+	      (first (satisfied neg-literal cstm))))
 	(t
 	 (loop for add-bindings in (find-all-match-bindings (subst-bindings start-bindings
 									    (first pos-literals))
 							    cstm)
 	    thereis
-	    (exists-match-bindings-for-sorted-literals? (rest pos-literals) 
-							neg-literals
-							(append add-bindings start-bindings)
-							cstm)))))
+	      (exists-match-bindings-for-sorted-literals? (rest pos-literals) 
+							  neg-literals
+							  (append add-bindings start-bindings)
+							  cstm)))))
 
 ;; Checks for the satisfaction of a problem using the bindings within the problem. Returns T or nil.
 ;; This function does not extend the problem bindings.
@@ -578,31 +578,31 @@
   (let ((all-partial-matches nil))
 
     (loop for bindings in binding-set
-	  append (find-all-partial-match-bindings-for-sorted-literals pos-literals
-								      neg-literals
-								      bindings
-								      cstm
-								      already-matched-literals)
-	  into binding-list
-	  finally 
-	  (setq all-partial-matches binding-list))
+       append (find-all-partial-match-bindings-for-sorted-literals pos-literals
+								   neg-literals
+								   bindings
+								   cstm
+								   already-matched-literals)
+       into binding-list
+       finally 
+	 (setq all-partial-matches binding-list))
     
     (loop with max-size-matches = nil
-	  with max-match-size = 0
-	  for match-pair in all-partial-matches
-	  for matched-literals = (first match-pair)
-	  for match-length = (length matched-literals)
-	  when (and (not (member-failure-context-list? (second match-pair)))
-		    (not (violates-binding-constraints? (subst-bindings (second match-pair)
-									(append pos-literals neg-literals)))))
-	  do
-	  (cond ((> match-length max-match-size)
-		 (setf max-match-size match-length
-		       max-size-matches (list match-pair)))
-		((= match-length max-match-size)
-		 (push match-pair max-size-matches)))
-	  finally
-	  (return max-size-matches))))
+       with max-match-size = 0
+       for match-pair in all-partial-matches
+       for matched-literals = (first match-pair)
+       for match-length = (length matched-literals)
+       when (and (not (member-failure-context-list? (second match-pair)))
+		 (not (violates-binding-constraints? (subst-bindings (second match-pair)
+								     (append pos-literals neg-literals)))))
+       do
+	 (cond ((> match-length max-match-size)
+		(setf max-match-size match-length
+		      max-size-matches (list match-pair)))
+	       ((= match-length max-match-size)
+		(push match-pair max-size-matches)))
+       finally
+	 (return max-size-matches))))
 
 ;;; assume already divided into pos and neg lists
 ;;;  returns list of pairs: ( ( matched-literals-1 bindings-1 ) ( matched-literals-2 bindings-2 ) ....  )
@@ -624,74 +624,74 @@
 										    (first pos-literals))
 								    cstm)
 		    append
-		    (find-all-partial-match-bindings-for-sorted-literals (rest pos-literals) 
-									 neg-literals
-									 (append add-bindings start-bindings)
-									 cstm
-									 (cons (first pos-literals)
-									       already-matched-literals)))))))
+		      (find-all-partial-match-bindings-for-sorted-literals (rest pos-literals) 
+									   neg-literals
+									   (append add-bindings start-bindings)
+									   cstm
+									   (cons (first pos-literals)
+										 already-matched-literals)))))))
 
 (defun move-negs-to-end (goals negs)
- (cond ((null goals) negs)
-       ((eq (caar goals) 'not)
-        (move-negs-to-end (cdr goals) (cons (car goals) negs)))
-       (t (cons (car goals) (move-negs-to-end (cdr goals) negs)))))
+  (cond ((null goals) negs)
+	((eq (caar goals) 'not)
+	 (move-negs-to-end (cdr goals) (cons (car goals) negs)))
+	(t (cons (car goals) (move-negs-to-end (cdr goals) negs)))))
 
 ;; Matches a given set of literals with variables with another set. Renamed from get-satisfied.
 (defun pattern-match-literals (goals beliefs &optional return-bindings?)
- (let ((result nil)
-       (bindings nil))
-   (do ((gnext (car goals) (car goals)))
-       ((null goals)
-        (if return-bindings?
-            (list result bindings)
-            (subst-bindings bindings result)))
-       (let ((tbindings (pattern-match-literal gnext beliefs bindings)))
-         (cond ((not (null tbindings))
-                (setq bindings (cdr tbindings))
-                (push gnext result))))
-       (pop goals))))
+  (let ((result nil)
+	(bindings nil))
+    (do ((gnext (car goals) (car goals)))
+	((null goals)
+	 (if return-bindings?
+	     (list result bindings)
+	     (subst-bindings bindings result)))
+      (let ((tbindings (pattern-match-literal gnext beliefs bindings)))
+	(cond ((not (null tbindings))
+	       (setq bindings (cdr tbindings))
+	       (push gnext result))))
+      (pop goals))))
 
 ;; Matches positive and negative literals seperately. Renamed from match-goal.
 (defun pattern-match-literal (goal beliefs bindings)
- (cond ((eq (car goal) 'not)
-        (pattern-match-neg-literal (cadr goal) beliefs bindings))
-       (t (pattern-match-pos-literal goal beliefs bindings))))
+  (cond ((eq (car goal) 'not)
+	 (pattern-match-neg-literal (cadr goal) beliefs bindings))
+	(t (pattern-match-pos-literal goal beliefs bindings))))
 
 ;; Renamed from match-pos-goal
 (defun pattern-match-pos-literal (goal beliefs bindings)
- (cond ((null beliefs) nil)
-       (t (let ((tbindings (pattern-matcher goal (car beliefs) bindings)))
-            (cond ((null (car tbindings))
-                   (pattern-match-pos-literal goal (cdr beliefs) bindings))
-                  (t tbindings))))))
+  (cond ((null beliefs) nil)
+	(t (let ((tbindings (pattern-matcher goal (car beliefs) bindings)))
+	     (cond ((null (car tbindings))
+		    (pattern-match-pos-literal goal (cdr beliefs) bindings))
+		   (t tbindings))))))
 
 ;; Renamed from match-neg-goal
 (defun pattern-match-neg-literal (ngoal beliefs bindings)
- (cond ((null beliefs)
-        (cons t bindings))
-       (t (let ((tbindings (pattern-matcher ngoal (car beliefs) bindings)))
-            (cond ((not (null (car tbindings))) nil)
-                  (t (pattern-match-neg-literal ngoal (cdr beliefs) bindings)))))))
+  (cond ((null beliefs)
+	 (cons t bindings))
+	(t (let ((tbindings (pattern-matcher ngoal (car beliefs) bindings)))
+	     (cond ((not (null (car tbindings))) nil)
+		   (t (pattern-match-neg-literal ngoal (cdr beliefs) bindings)))))))
 
 ;; Same as bmatches but does not require belief structures. Renamed from bmatches-pat.
 (defun pattern-matcher (clist elist bindings)
- (cond ((not (eq (length clist) (length elist)))
-        (cons nil bindings))
-       (t (let ((flag t))
-            (do ((c (car clist) (car clist))
-                 (e (car elist) (car elist))
-                 (b nil nil))
-                ((or (null flag) (null clist))
-                 (cons flag bindings))
-                (cond ((not (variablep c))
-                       (cond ((not (equal c e))(setq flag nil))))
-                      ((setq b (assoc c bindings))
-                       (cond ((not (equal (cdr b) e))
-                              (setq flag nil))))
-                      (t (push (cons c e) bindings)))
-                (pop clist)
-                (pop elist))))))
+  (cond ((not (eq (length clist) (length elist)))
+	 (cons nil bindings))
+	(t (let ((flag t))
+	     (do ((c (car clist) (car clist))
+		  (e (car elist) (car elist))
+		  (b nil nil))
+		 ((or (null flag) (null clist))
+		  (cons flag bindings))
+	       (cond ((not (variablep c))
+		      (cond ((not (equal c e))(setq flag nil))))
+		     ((setq b (assoc c bindings))
+		      (cond ((not (equal (cdr b) e))
+			     (setq flag nil))))
+		     (t (push (cons c e) bindings)))
+	       (pop clist)
+	       (pop elist))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; EXECUTION routines
@@ -718,11 +718,11 @@
 	
 	((primitive-intention? executing-intention)
 	 (cond ((ready-to-execute? executing-intention) ; this should check conditions, extend bindings (with percepts as well),
-					                ; and check if all variables of action-form are bound
+					; and check if all variables of action-form are bound
 		(cond ((execute-action executing-intention) ; instantiate action, evaluate (run),
 		       t)				    ; let next cycle check if targets satisfied
 		      (t 
-		       ;(record-failure executing-intention)   ;; record/save failed intention in caller-intention or problem
+					;(record-failure executing-intention)   ;; record/save failed intention in caller-intention or problem
 		       (abort-execution 
 			executing-intention
 			(format nil
@@ -761,7 +761,7 @@
 	 (pprint-intention executing-intention)
 	 )))
 
- ; modify so in special case of Null Effects, will execute exactly once (both primitive and macro)
+					; modify so in special case of Null Effects, will execute exactly once (both primitive and macro)
 (defun execution-completed-successfully? (executing-intention)
   (cond ((and (null (intention-effects executing-intention)) 
 	      (primitive-intention? executing-intention))
@@ -791,14 +791,14 @@
 		    (intention-head intention))))
 
 #|(defun record-failure (intention)
-  (let ((i-parent (intention-execution-i-parent intention)))
-    (cond (i-parent
-	   (push intention
-		 (intention-failed-subskill-executions i-parent)))
-	  (t
-	   (let ((problem-parent (intention-problem-parent intention)))
-	     (if problem-parent
-		 (push intention (problem-failed-subskill-executions problem-parent))))))))|#
+(let ((i-parent (intention-execution-i-parent intention)))
+  (cond (i-parent
+	 (push intention
+	       (intention-failed-subskill-executions i-parent)))
+	(t
+	 (let ((problem-parent (intention-problem-parent intention)))
+	   (if problem-parent
+	       (push intention (problem-failed-subskill-executions problem-parent))))))))|#
   
 ;; should update executing-intention*, transmit new bindings, advance to next subskill
 ;; updates executing-intention*, and passes back any new bindings through head
@@ -806,12 +806,12 @@
   (let ((next-subskill-called? nil)
 	(i-parent (intention-execution-i-parent satisfied-intention))
 	(instantiated-head (subst-bindings (intention-bindings satisfied-intention)
-						   (intention-head satisfied-intention))))
+					   (intention-head satisfied-intention))))
     (cond (i-parent
 	   ;; pass back bindings to i-parent
 	   (let* ((i-parent-bindings (intention-bindings i-parent))
 		  (i-parent-head (subst-bindings i-parent-bindings
-							 (first (intention-remaining-subskills i-parent)))) ; is this right?????
+						 (first (intention-remaining-subskills i-parent)))) ; is this right?????
 		  (new-bindings-form (unify-match instantiated-head i-parent-head))
 		  (full-bindings (append (if (first new-bindings-form)
 					     (rest new-bindings-form)
@@ -926,8 +926,8 @@
 (defun ready-to-execute? (exec-intent)
   (when (and (intention-execution-flag exec-intent) ; could assume this is always true when called
 	     (conditions-satisfied? exec-intent))
-    ;(intention-started? exec-intent)
-    ;(setf (intention-already-started? exec-intent) T)
+					;(intention-started? exec-intent)
+					;(setf (intention-already-started? exec-intent) T)
     (when (primitive-intention? exec-intent)
       (extend-bindings-with-percepts exec-intent))
     t))
@@ -1000,17 +1000,17 @@
 	     for all-matches = (find-all-match-bindings-for-literals conditions bindings cstm*)
 	     when all-matches
 	     collect (cons skill (random-choose all-matches)) ; randomly choose one way to sastisfiy conditions
-	     ))
+	       ))
 	 (chosen-skill-match (if matching-skills
 				 (random-choose matching-skills))))
     (cond (chosen-skill-match
-      (let* ((skill (first chosen-skill-match))
-	     (bindings (rest chosen-skill-match))
-	     (new-intention (create-intention skill bindings t)))
-	(setf (intention-execution-i-parent new-intention)
-	      calling-intention)
-	(set-executing-intention new-intention)
-	t
+	   (let* ((skill (first chosen-skill-match))
+		  (bindings (rest chosen-skill-match))
+		  (new-intention (create-intention skill bindings t)))
+	     (setf (intention-execution-i-parent new-intention)
+		   calling-intention)
+	     (set-executing-intention new-intention)
+	     t
 	     ))
 	  (t (format t "~%CALL TO INTENTION ~a FAILED BECAUSE NO MATCH FOUND" head)))
     ))
@@ -1043,19 +1043,19 @@
     #|
     ;; Step 2. Select focus
     ((or (not (problem-focus problem))
-	 (goal-literal-satisfied? (problem-focus problem)))
-     (print "Selecting focus.")
-     (setf (problem-intention problem) nil)
-     (setf (problem-focus problem) (select-focus problem))
+    (goal-literal-satisfied? (problem-focus problem)))
+    (print "Selecting focus.")
+    (setf (problem-intention problem) nil)
+    (setf (problem-focus problem) (select-focus problem))
 
-     (cond ((problem-focus problem)
-	    (print "Focus selected, proceeding to select a skill for the focus")
-	    (print (problem-focus problem)))
-	   (t
-	    (print "Failed to select focus for the current problem with the given bindings. Backtracking.")
-	    (create-and-store-failure-context (problem-bindings problem))
-	    (setf (problem-bindings problem) nil)
-	    (setf (problem-bindings-selected? problem) nil))))
+    (cond ((problem-focus problem)
+    (print "Focus selected, proceeding to select a skill for the focus")
+    (print (problem-focus problem)))
+    (t
+    (print "Failed to select focus for the current problem with the given bindings. Backtracking.")
+    (create-and-store-failure-context (problem-bindings problem))
+    (setf (problem-bindings problem) nil)
+    (setf (problem-bindings-selected? problem) nil))))
     |#
 
     ;; Step 3. Select Skill
@@ -1088,41 +1088,41 @@
 	      (setf (problem-bindings problem) nil)
 	      (setf (problem-bindings-selected? problem) nil)
 	      ))))
-	      #|
-	      (print "Failed to select skill for the current problem with given bindings and focus. Trying to chain on concept.")
-	      
-	      ;; Concept chaining.
-	      (setq focus-breakup-triplet (find-matching-concept (problem-focus problem)
-								 :problem-bindings (problem-bindings problem)
-								 :ignore-failure-context? nil))
-	      ;; format of focus-breakup-triplet is (head relations bindings)
-	      (cond ((and focus-breakup-triplet
-			  (second focus-breakup-triplet)) ; Relations must be non-NIL in order to chain --Glenn 10-13-10
-		     (setq intention 
-			   (create-dummy-intention-for-concept-chaining focus-breakup-triplet))
-		     (setf (intention-problem-parent intention) problem)
-		     (setf (problem-intention problem) intention)
-	      
-		     ;; Should (establish-correspondence-for-intention-targets problem) called for a dummy intention,
-		     ;; especially when this intention would never actually executed.
+    #|
+    (print "Failed to select skill for the current problem with given bindings and focus. Trying to chain on concept.")
+    
+    ;; Concept chaining.
+    (setq focus-breakup-triplet (find-matching-concept (problem-focus problem)
+    :problem-bindings (problem-bindings problem)
+    :ignore-failure-context? nil))
+    ;; format of focus-breakup-triplet is (head relations bindings)
+    (cond ((and focus-breakup-triplet
+    (second focus-breakup-triplet)) ; Relations must be non-NIL in order to chain --Glenn 10-13-10
+    (setq intention 
+    (create-dummy-intention-for-concept-chaining focus-breakup-triplet))
+    (setf (intention-problem-parent intention) problem)
+    (setf (problem-intention problem) intention)
+    
+    ;; Should (establish-correspondence-for-intention-targets problem) called for a dummy intention,
+    ;; especially when this intention would never actually executed.
 
-		     (print "Concept found for chaining. Dummy intention for the concept created.")
-		     (pprint-intention intention)
+    (print "Concept found for chaining. Dummy intention for the concept created.")
+    (pprint-intention intention)
 
-		     (make-problem-from-conditions intention)
-		     
-		     (incf nodes-explored*)
-		     
-		     ;;If chaining of a negative goal, flag the new problem as disjunctive.
-		     (if (eq (car (problem-focus problem)) 'not)
-			 (setf (problem-disjunctive-goal-list? active-problem*)
-			       t)))
-		    (t
-		     (print "No concept found for concept-chaining for the focus of the current problem. Backtracking.")
-		     (create-and-store-failure-context (problem-bindings problem)
-						       (problem-focus problem))
-		     (setf (problem-focus problem) nil)))))))
-	      |#
+    (make-problem-from-conditions intention)
+    
+    (incf nodes-explored*)
+    
+    ;;If chaining of a negative goal, flag the new problem as disjunctive.
+    (if (eq (car (problem-focus problem)) 'not)
+    (setf (problem-disjunctive-goal-list? active-problem*)
+    t)))
+    (t
+    (print "No concept found for concept-chaining for the focus of the current problem. Backtracking.")
+    (create-and-store-failure-context (problem-bindings problem)
+    (problem-focus problem))
+    (setf (problem-focus problem) nil)))))))
+    |#
     (t
      (warn "You should never be here in backward-chain-problem-solve."))))
 
@@ -1140,15 +1140,15 @@
 
     ;; Extend problem bindings with bindings from unchainable goals of the problem.
     (loop for pos-objective in (problem-pos-objectives problem)
-	  do
-	  (when (member (car pos-objective) pos-unchainable-conditions* :test #'eq)
-	    (push pos-objective pos-literals)))
+       do
+	 (when (member (car pos-objective) pos-unchainable-conditions* :test #'eq)
+	   (push pos-objective pos-literals)))
     
     (loop for neg-objective in (problem-neg-objectives problem)
-	  do
-	  (when (member (caadr neg-objective) neg-unchainable-conditions* :test #'eq)
-	    (push neg-objective neg-literals)))
-	  
+       do
+	 (when (member (caadr neg-objective) neg-unchainable-conditions* :test #'eq)
+	   (push neg-objective neg-literals)))
+    
     (setq intermediate-bindings (find-all-match-bindings-for-sorted-literals pos-literals 
 									     neg-literals
 									     (problem-bindings problem)
@@ -1227,7 +1227,7 @@
 
 	 ;;Select a backtracking mechanism here (backtrack to parent or to root).
 	 ;;Backtracking to the root can be used for iterative sampling.
-	 ;(backtrack-to-parent-problem problem))
+					;(backtrack-to-parent-problem problem))
 	 (backtrack-to-root-problem problem))
 	
 	((null (car result))
@@ -1237,7 +1237,7 @@
 		;; This problem has not been encountered till now. Proceed to focus selection.
 		(setf (problem-bindings problem) (cdr result))
 		(setf (problem-bindings-selected? problem) t)
-	
+		
 		;; Set both focus and intention to NIL to make sure new ones get chosen
 		(setf (problem-focus problem) nil
 		      (problem-intention problem) nil)
@@ -1248,9 +1248,9 @@
 		(format t "~% Unsatisfied goals for selected bindings: (")
 		(loop for goal in (subst-bindings (problem-bindings problem)
 						  (problem-objectives problem))
-		      when (not (goal-literal-satisfied? goal))
-		      do
-		      (format t "~a" goal))
+		   when (not (goal-literal-satisfied? goal))
+		   do
+		     (format t "~a" goal))
 		(format t ")~%"))
 	       (t
 		(print "Found a repeated problem! Reporting the current bindings as a failure.")
@@ -1282,7 +1282,7 @@
 		       (setf (intention-bindings (problem-i-parent problem))
 			     (append (intention-bindings (problem-i-parent problem))
 				     (cdr result)))
-		       ;(establish-correspondence-for-intention-targets active-problem*)
+					;(establish-correspondence-for-intention-targets active-problem*)
 
 		       (set-executing-intention (problem-i-parent problem))
 		       (setf (problem-bindings-selected? active-problem*) nil))))
@@ -1308,31 +1308,31 @@
     ;; have not failed before.
     (loop for goal in (subst-bindings (problem-bindings problem) 
 				      (problem-objectives problem))
-	  when (and (not (goal-literal-satisfied? goal))
-		    (not (member-failure-context-list? (problem-bindings problem)
-						       goal)))
-	  do
-	  (push goal unsatisfied-goals))
+       when (and (not (goal-literal-satisfied? goal))
+		 (not (member-failure-context-list? (problem-bindings problem)
+						    goal)))
+       do
+	 (push goal unsatisfied-goals))
 
     ;; Step 2: Get all the goals added by add constraints and all the goals
     ;; deleted by ordering constraints.
     (loop for constraint in constraint-memory*
-	  when (constraint-active? constraint unsatisfied-goals)
-	  do
-	  (cond ((constraints-add constraint)
-		 (setq goals-added (append (subst-bindings (constraints-bindings constraint)
-							   (constraints-add constraint))
-					   goals-added))
-		 (print "Found an active add constraint."))
-		((constraints-delete constraint)
-		 (setq goals-to-delete (append (subst-bindings (constraints-bindings constraint)
-							       (constraints-delete constraint))
-					       goals-to-delete))
-		 (print "Found an active delete constraint."))))
+       when (constraint-active? constraint unsatisfied-goals)
+       do
+	 (cond ((constraints-add constraint)
+		(setq goals-added (append (subst-bindings (constraints-bindings constraint)
+							  (constraints-add constraint))
+					  goals-added))
+		(print "Found an active add constraint."))
+	       ((constraints-delete constraint)
+		(setq goals-to-delete (append (subst-bindings (constraints-bindings constraint)
+							      (constraints-delete constraint))
+					      goals-to-delete))
+		(print "Found an active delete constraint."))))
     
     ;; Step 3: Remove all goals marked for deletion.
     (loop for goal in goals-to-delete
-	  do
+       do
 	 (setf goals-added (delete goal goals-added :test #'equal))
 	 (setf unsatisfied-goals (delete goal unsatisfied-goals :test #'equal)))
     
@@ -1355,76 +1355,93 @@
 
     #|
     (loop for skill in sltm*
-	  do
-	  (loop for effect in (sclause-effects skill)
-		for (flag . bindings ) = (unify-match focus-goal effect)
-		do
-		(when flag
-		  (push (list effect skill bindings)
-			candidate-skills))))
+    do
+    (loop for effect in (sclause-effects skill)
+    for (flag . bindings ) = (unify-match focus-goal effect)
+    do
+    (when flag
+    (push (list effect skill bindings)
+    candidate-skills))))
     (when debug*
-      (print "**** Candidates Matching Focus ****")
-      (mapcar #'print candidate-skills))
+    (print "**** Candidates Matching Focus ****")
+    (mapcar #'print candidate-skills))
     |#
 
     (when bind-unchainables?
       (setf candidate-skills
 	    (loop for sclause in sltm*
-		  append (find-all-candidates-satisfying-unchainable-conditions sclause nil))))
+	       append (find-all-candidates-satisfying-unchainable-conditions sclause nil))))
     (when debug*
       (print "**** Candidates with Unchainable Bindings ****")
       (mapcar #'print candidate-skills))
 
     (loop with results = nil
-	  for (sclause bindings rest) in candidate-skills
-	  when (not (member-failure-context-list? (problem-bindings problem)
-						  (problem-focus problem)
-						  (create-intention sclause bindings)))
-	  do
-	  (push (list sclause bindings rest) results)
-	  finally 
-	  (setq candidate-skills results))
+       for (sclause bindings rest) in candidate-skills
+       when (not (member-failure-context-list? (problem-bindings problem)
+					       (problem-focus problem)
+					       (create-intention sclause bindings)))
+       do
+	 (push (list sclause bindings rest) results)
+       finally 
+	 (setq candidate-skills results))
 
     (when candidate-skills
       (let ((max-effects-matched-set nil)
 	    (min-unsatisfied-conditions-set nil))
 	
 	(case search-direction*
+	  (:BACKWARD-NON-DETERMINISTIC
+	   (loop with best-triplets = nil
+	      with max-value = -1
+	      for triplet in candidate-skills
+	      for current-value = (max-effects-matched-heuristic (butlast triplet) problem)
+	      do
+		(cond 
+		  ((< max-value current-value)
+		   (setq max-value current-value
+			 best-triplets (list triplet)))
+		  ((= max-value current-value)
+		   (push triplet best-triplets)))
+	      finally
+		(setq max-effects-matched-set best-triplets)
+		(if max-effects-matched-set
+		    (setq selected-triple (random-choose max-effects-matched-set)))))
+	  
 	  (:BACKWARD
 	   (loop with best-triplets = nil
-		 with max-value = -1
-		 for triplet in candidate-skills
-		 for current-value = (max-effects-matched-heuristic (butlast triplet) problem)
-		 do
-		 (cond 
-		   ((< max-value current-value)
-		    (setq max-value current-value
-			  best-triplets (list triplet)))
-		   ((= max-value current-value)
-		    (push triplet best-triplets)))
-		 finally
-		 (setq max-effects-matched-set best-triplets)
-		 (if max-effects-matched-set
-		     (setq selected-triple (random-choose max-effects-matched-set)))))
+	      with max-value = -1
+	      for triplet in candidate-skills
+	      for current-value = (max-effects-matched-heuristic (butlast triplet) problem)
+	      do
+		(cond 
+		  ((< max-value current-value)
+		   (setq max-value current-value
+			 best-triplets (list triplet)))
+		  ((= max-value current-value)
+		   (push triplet best-triplets)))
+	      finally
+		(setq max-effects-matched-set best-triplets)
+		(if max-effects-matched-set
+		    (setq selected-triple (random-choose max-effects-matched-set)))))
 	  
 	  (:FORWARD
 	   (loop with best-triplets = nil
-		 with min-value = nil
-		 for triplet in candidate-skills
-		 for current-value = (min-unsatisfied-conditions-heuristic (butlast triplet))
-		 do
-		 (cond 
-		   ((or
-		     (null min-value)
-		     (> min-value current-value))
-		    (setq min-value current-value
-			  best-triplets (list triplet)))
-		   ((= min-value current-value)
-		    (push triplet best-triplets)))
-		 finally
-		 (setq min-unsatisfied-conditions-set best-triplets)
-		 (if min-unsatisfied-conditions-set
-		     (setq selected-triple (random-choose min-unsatisfied-conditions-set))))))
+	      with min-value = nil
+	      for triplet in candidate-skills
+	      for current-value = (min-unsatisfied-conditions-heuristic (butlast triplet))
+	      do
+		(cond 
+		  ((or
+		    (null min-value)
+		    (> min-value current-value))
+		   (setq min-value current-value
+			 best-triplets (list triplet)))
+		  ((= min-value current-value)
+		   (push triplet best-triplets)))
+	      finally
+		(setq min-unsatisfied-conditions-set best-triplets)
+		(if min-unsatisfied-conditions-set
+		    (setq selected-triple (random-choose min-unsatisfied-conditions-set))))))
 	
 	;;(print max-effects-matched-set)
 	;;(print min-unsatisfied-conditions-set)
@@ -1442,7 +1459,7 @@
 							      bindings
 							      cstm*)))
     (loop for good-binding in good-bindings
-	 collect (list sclause good-binding bindings))))
+       collect (list sclause good-binding bindings))))
 
 (defun max-effects-matched-heuristic (pair problem)
   (let* ((goal-literals (problem-objectives problem))
@@ -1455,9 +1472,9 @@
 
     (loop for goal in (subst-bindings (problem-bindings problem)
 				      goal-literals)
-	  when (not (goal-literal-satisfied? goal))
-	  do
-	  (push goal unsatisfied-goal-literals))
+       when (not (goal-literal-satisfied? goal))
+       do
+	 (push goal unsatisfied-goal-literals))
 
     ;; result is  NIL or (bindings matches-1 matches-2)
     (setq result
@@ -1493,50 +1510,50 @@
 			  focus))))
     
     (loop with result = nil
-	  for concept in cltm*
-	  ;; Note: Here the order of arguments to unify-match matters.
-	  for (flag . bindings) = (unify-match to-match
-					       (concept-head concept))
-	  while (not result)
-	  when (and flag
-		    (or ignore-failure-context?
-			(not (concept-member-of-failure-context-list? problem-bindings 
-								      focus
-								      (if negated-focus?
-									  (car (get-chainable-negations (subst-bindings bindings
-															(concept-relations concept))))
-									  (concept-relations concept))))))
-	  do
-	  (push (list focus
-		      (concept-relations concept)
-		      bindings)
-		result)
-	  finally
-	  (when result
-	    (return (random-choose result))))))
+       for concept in cltm*
+       ;; Note: Here the order of arguments to unify-match matters.
+       for (flag . bindings) = (unify-match to-match
+					    (concept-head concept))
+       while (not result)
+       when (and flag
+		 (or ignore-failure-context?
+		     (not (concept-member-of-failure-context-list? problem-bindings 
+								   focus
+								   (if negated-focus?
+								       (car (get-chainable-negations (subst-bindings bindings
+														     (concept-relations concept))))
+								       (concept-relations concept))))))
+       do
+	 (push (list focus
+		     (concept-relations concept)
+		     bindings)
+	       result)
+       finally
+	 (when result
+	   (return (random-choose result))))))
 
 (defun repeated-problem? (problem bindings)
   (let ((goal-list (subst-bindings bindings
 				   (problem-objectives problem))))
 
     (loop with flag = nil
-	  with parent = (if (problem-i-parent problem)
-			    (intention-problem-parent (problem-i-parent problem))
-			    nil)
-	  for target-list = (if parent
-				(subst-bindings (problem-bindings parent)
-						(problem-objectives parent)))
-	  while (and parent 
-		     (null flag))
-	  do
-	  (if (exists-subset-exact-match-with-permuted-literals target-list goal-list)
-	      (setq flag t))
-	  (if (problem-i-parent parent)
-	      (setq parent (intention-problem-parent (problem-i-parent parent)))
-	      (setq parent nil))
+       with parent = (if (problem-i-parent problem)
+			 (intention-problem-parent (problem-i-parent problem))
+			 nil)
+       for target-list = (if parent
+			     (subst-bindings (problem-bindings parent)
+					     (problem-objectives parent)))
+       while (and parent 
+		  (null flag))
+       do
+	 (if (exists-subset-exact-match-with-permuted-literals target-list goal-list)
+	     (setq flag t))
+	 (if (problem-i-parent parent)
+	     (setq parent (intention-problem-parent (problem-i-parent parent)))
+	     (setq parent nil))
 
-	  finally	      
-	  (return flag))))
+       finally	      
+	 (return flag))))
 
 ;; make a new problem from the conditions of an intention, substitute the bindings from the intention
 ;; and set it as an active-problem.
@@ -1545,7 +1562,7 @@
 	(instantiated-conditions (subst-bindings (intention-bindings intention)     ;Substitute bindings from intention into the conditions.
 						 (intention-conditions intention))))
 
-    ;Create a new problem from the goals in the goal-list
+					;Create a new problem from the goals in the goal-list
     (setq problem (make-problem-from-goal-literal-list instantiated-conditions))
 
     (print "Setting new problem")
@@ -1580,10 +1597,10 @@
 
     (when fc-list
       (setq flag (loop for fc-instance in fc-list
-		       thereis (match-against-failure-context-instance? bindings 
-									focus 
-									intention 
-									fc-instance)))
+		    thereis (match-against-failure-context-instance? bindings 
+								     focus 
+								     intention 
+								     fc-instance)))
       (if flag
 	  (print "Found a matching failure-context."))
       flag)))
@@ -1613,20 +1630,20 @@
 
     ;; Only match against dummy intentions, i.e., intentions with nill ids
     (loop for fc-instance in fc-list
-	  for fc-intention =  (failure-context-intention fc-instance)
-	  when (and (null flag)
-		    fc-intention
-		    (null (intention-id fc-intention)))
-	  do
-	  (setq flag (and (car (unify-match head
-					    (intention-head fc-intention)))
-			  (car (unify-match conditions
-					    (intention-conditions fc-intention)))
-			  (consistent-bindings? bindings (failure-context-bindings fc-instance)))))
+       for fc-intention =  (failure-context-intention fc-instance)
+       when (and (null flag)
+		 fc-intention
+		 (null (intention-id fc-intention)))
+       do
+	 (setq flag (and (car (unify-match head
+					   (intention-head fc-intention)))
+			 (car (unify-match conditions
+					   (intention-conditions fc-intention)))
+			 (consistent-bindings? bindings (failure-context-bindings fc-instance)))))
 
-      (if flag
-	  (print "Found a matching failure-context for a concept."))
-      flag))
+    (if flag
+	(print "Found a matching failure-context for a concept."))
+    flag))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Structures and functions for constraints
@@ -1642,7 +1659,7 @@
   add
   delete
   bindings
-)
+  )
 
 (defmacro create-constraints (&rest constraints)
   `(let ((constraints (quote ,constraints))
@@ -1668,12 +1685,12 @@
 	((null constraint)
 	 (cond ((null id) (setq id (incf id-count*))))
 	 (make-constraints :name name
-		       :id id
-		       :type type
-		       :goal-conditions goal-conditions
-		       :belief-conditions belief-conditions
-		       :add add
-		       :delete delete))
+			   :id id
+			   :type type
+			   :goal-conditions goal-conditions
+			   :belief-conditions belief-conditions
+			   :add add
+			   :delete delete))
 
       (cond ((eq next-field ':id)(setq id next-spec))
 	    ((eq next-field ':type)(setq type next-spec))
@@ -1693,25 +1710,25 @@
 	      'GOAL-CONSTRAINT)
       ;; Match goal-conditions
       (loop with i = 1
-	    with result = nil
-	    with tliteral = nil
-	    while (and (<= i (length g-list))
-		       (not constraint-matched?))
-	    do
-	    ;; result is of the form (matched-literals bindings)
-	    (setq result (pattern-match-literals (constraints-goal-conditions constraint)
-						 g-list
-						 t))
-	    (cond ((eq (length (constraints-goal-conditions constraint))
-		       (length (car result)))
-		   (setq constraint-matched? t)
-		   (setf (constraints-bindings constraint)
-			 (second result)))
-		  ;; shuffle the goal-list to generate a different permutations of literals
-		  (t
-		   (incf i)
-		   (setq tliteral (pop g-list))
-		   (setq g-list (append g-list (list tliteral))))))
+	 with result = nil
+	 with tliteral = nil
+	 while (and (<= i (length g-list))
+		    (not constraint-matched?))
+	 do
+	 ;; result is of the form (matched-literals bindings)
+	   (setq result (pattern-match-literals (constraints-goal-conditions constraint)
+						g-list
+						t))
+	   (cond ((eq (length (constraints-goal-conditions constraint))
+		      (length (car result)))
+		  (setq constraint-matched? t)
+		  (setf (constraints-bindings constraint)
+			(second result)))
+		 ;; shuffle the goal-list to generate a different permutations of literals
+		 (t
+		  (incf i)
+		  (setq tliteral (pop g-list))
+		  (setq g-list (append g-list (list tliteral))))))
 
       ;; Match belief-conditions
       (when (and constraint-matched?
@@ -1726,42 +1743,42 @@
   (let ((constraint-matched? nil))
     
     (loop for constraint in constraint-memory*
-	  while (not constraint-matched?)
-	  when (eq (constraints-type constraint)
-		   'BINDINGS-CONSTRAINT)
-	  do
-	  
-	  ;; Match goal-conditions
-	  (loop with i = 1
-		with result = nil
-		with tliteral = nil
-		while (and (<= i (length g-list))
-			   (not constraint-matched?))
-		do
-		;; result is of the form (matched-literals bindings)
-		(setq result (pattern-match-literals (constraints-goal-conditions constraint)
-							    g-list
-							    t))
-		(cond ((eq (length (constraints-goal-conditions constraint))
-			   (length (car result)))
-		       (setq constraint-matched? t)
-		       (setf (constraints-bindings constraint)
-			     (second result)))
-		      ;; shuffle the goal-list to generate a different permutations of literals
-		      (t
-		       (incf i)
-		       (setq tliteral (pop g-list))
-		       (setq g-list (append g-list (list tliteral))))))
-	  
-	  (when constraint-matched?
-	    (setq constraint-matched? (exists-match-bindings-for-literals? (constraints-belief-conditions constraint) 
-										(constraints-bindings constraint) 
-										cstm*))))
+       while (not constraint-matched?)
+       when (eq (constraints-type constraint)
+		'BINDINGS-CONSTRAINT)
+       do
+	 
+       ;; Match goal-conditions
+	 (loop with i = 1
+	    with result = nil
+	    with tliteral = nil
+	    while (and (<= i (length g-list))
+		       (not constraint-matched?))
+	    do
+	    ;; result is of the form (matched-literals bindings)
+	      (setq result (pattern-match-literals (constraints-goal-conditions constraint)
+						   g-list
+						   t))
+	      (cond ((eq (length (constraints-goal-conditions constraint))
+			 (length (car result)))
+		     (setq constraint-matched? t)
+		     (setf (constraints-bindings constraint)
+			   (second result)))
+		    ;; shuffle the goal-list to generate a different permutations of literals
+		    (t
+		     (incf i)
+		     (setq tliteral (pop g-list))
+		     (setq g-list (append g-list (list tliteral))))))
+	 
+	 (when constraint-matched?
+	   (setq constraint-matched? (exists-match-bindings-for-literals? (constraints-belief-conditions constraint) 
+									  (constraints-bindings constraint) 
+									  cstm*))))
     ;;(if constraint-matched?
-	;;(print "Found a violated bindings-constraint. Rejecting the current bindings."))
+    ;;(print "Found a violated bindings-constraint. Rejecting the current bindings."))
     
     constraint-matched?))
-    
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Set Up Correspondence of Goal-Targets and Targets
 ;;;    (and update bindings of intention based on match)
@@ -1815,7 +1832,7 @@
 	    ;; set problem-target-goals
 	    (setf (problem-target-goals problem)
 		  all-target-goal-literals)
-	       
+	    
 	    ;; set intention-bindings -- making sure that the problem-bindings are properly
 	    ;; inherited as the intention-bindings
 	    (setf (intention-bindings intention)
@@ -1829,9 +1846,9 @@
 
 (defun remove-satisfied-literals (literal-list)
   (loop for literal in literal-list
-	unless
-	(goal-literal-satisfied? literal)
-	collect literal))
+     unless
+       (goal-literal-satisfied? literal)
+     collect literal))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Functions to generate list of unchainable conditions
@@ -1845,80 +1862,80 @@
     ;; Consider all primitive concepts and their negations as possibly unchainable
     ;; Also create a list of negations of hierarchichal concepts.
     (loop with ccopy = nil
-	  for concept in cltm
-	  do
-	  (cond ((null (concept-relations concept))
+       for concept in cltm
+       do
+	 (cond ((null (concept-relations concept))
 
-		 (when (not (member (car (concept-head concept)) 
-				    pos-unchainable-conditions* :test #'equal))
-		   (push (car (concept-head concept)) 
-			 pos-unchainable-conditions*))
+		(when (not (member (car (concept-head concept)) 
+				   pos-unchainable-conditions* :test #'equal))
+		  (push (car (concept-head concept)) 
+			pos-unchainable-conditions*))
 
-		 (when (not (member (car (concept-head concept)) 
-				    neg-unchainable-conditions* :test #'equal))
-		   (push (car (concept-head concept)) 
-			 neg-unchainable-conditions*))
+		(when (not (member (car (concept-head concept)) 
+				   neg-unchainable-conditions* :test #'equal))
+		  (push (car (concept-head concept)) 
+			neg-unchainable-conditions*))
 
-		 (setq cltm
-		       (remove concept cltm :test #'equal)))
+		(setq cltm
+		      (remove concept cltm :test #'equal)))
 
-		(t
-		 (setq ccopy (copy-concept concept))
-		 (setf (concept-head ccopy)
-		       (list 'not (concept-head ccopy)))
-		 (push ccopy neg-hierarchical-concepts))))
+	       (t
+		(setq ccopy (copy-concept concept))
+		(setf (concept-head ccopy)
+		      (list 'not (concept-head ccopy)))
+		(push ccopy neg-hierarchical-concepts))))
     
     ;; All concepts that are achieved by a skill are chainable.
     ;; Remove them from the lists (pos-unchainable-conditions*, neg-unchainable-conditions*, cltm,
     ;; neg-hierarchical-concepts), if present.
     (loop for skill in sltm
-	  do
-	  (loop for effect in (sclause-effects skill)
-		do
-		(cond ((not (eq (car effect) 'not))
-		       (when (not (member (car effect) 
-					  pos-chainables :test #'equal))
-			 (push (car effect) pos-chainables))
-		       (setq pos-unchainable-conditions*
-			     (remove (car effect) pos-unchainable-conditions* :test #'equal))
-		       (setq cltm
-			     (remove (car effect) cltm :test #'(lambda (literal concept)
-								 (eq literal (car (concept-head concept)))))))
-		      (t
-		       (when (not (member (caadr effect) 
-					  neg-chainables :test #'equal))
-			 (push (caadr effect) neg-chainables))
-		       (setq neg-unchainable-conditions*
-			     (remove (caadr effect) neg-unchainable-conditions* :test #'equal))
-		       (setq neg-hierarchical-concepts (remove (caadr effect) neg-hierarchical-concepts
-							       :test #'(lambda (literal concept)
-									 (eq literal (caadr (concept-head concept))))))))))
+       do
+	 (loop for effect in (sclause-effects skill)
+	    do
+	      (cond ((not (eq (car effect) 'not))
+		     (when (not (member (car effect) 
+					pos-chainables :test #'equal))
+		       (push (car effect) pos-chainables))
+		     (setq pos-unchainable-conditions*
+			   (remove (car effect) pos-unchainable-conditions* :test #'equal))
+		     (setq cltm
+			   (remove (car effect) cltm :test #'(lambda (literal concept)
+							       (eq literal (car (concept-head concept)))))))
+		    (t
+		     (when (not (member (caadr effect) 
+					neg-chainables :test #'equal))
+		       (push (caadr effect) neg-chainables))
+		     (setq neg-unchainable-conditions*
+			   (remove (caadr effect) neg-unchainable-conditions* :test #'equal))
+		     (setq neg-hierarchical-concepts (remove (caadr effect) neg-hierarchical-concepts
+							     :test #'(lambda (literal concept)
+								       (eq literal (caadr (concept-head concept))))))))))
 
     ;; Loop through remaining hierarchical concepts,
     ;; and determine if they are unchainable. This 
     ;; process is recursive.
     (loop for concept in cltm
-	  do
-	  (when (and (all-relations-unchainable (concept-relations concept) pos-chainables neg-chainables)
-		     (not (member (car (concept-head concept)) 
-				    pos-unchainable-conditions* :test #'equal)))
-	    (push (car (concept-head concept)) 
-		  pos-unchainable-conditions*)))
+       do
+	 (when (and (all-relations-unchainable (concept-relations concept) pos-chainables neg-chainables)
+		    (not (member (car (concept-head concept)) 
+				 pos-unchainable-conditions* :test #'equal)))
+	   (push (car (concept-head concept)) 
+		 pos-unchainable-conditions*)))
 
     ;; Loop through remaining negations of hierarchical concepts,
     ;; and determine if they are unchainable. This 
     ;; process is recursive.
     (loop for concept in neg-hierarchical-concepts
-	  do
-	  (when (and (all-relations-unchainable (concept-relations concept) pos-chainables neg-chainables)
-		     (not (member (caadr (concept-head concept)) 
-				    neg-unchainable-conditions* :test #'equal)))
-	    (push (caadr (concept-head concept)) 
-		  neg-unchainable-conditions*)))))
+       do
+	 (when (and (all-relations-unchainable (concept-relations concept) pos-chainables neg-chainables)
+		    (not (member (caadr (concept-head concept)) 
+				 neg-unchainable-conditions* :test #'equal)))
+	   (push (caadr (concept-head concept)) 
+		 neg-unchainable-conditions*)))))
 
 (defun all-relations-unchainable(relations pos-chainables neg-chainables)
   (loop for relation in relations
-	always (is-unchainable relation pos-chainables neg-chainables)))
+     always (is-unchainable relation pos-chainables neg-chainables)))
 
 (defun is-unchainable(relation pos-chainables neg-chainables)
   (let ((concept-triplet (find-matching-concept relation
@@ -1959,11 +1976,11 @@
 (defun negate-relations(relations)
   (let ((negated-relations nil))
     (loop for relation in relations
-	  do
-	  (cond ((eq (car relation) 'not)
-		 (push (cadr relation) negated-relations))
-		(t
-		 (push (list 'not relation) negated-relations))))
+       do
+	 (cond ((eq (car relation) 'not)
+		(push (cadr relation) negated-relations))
+	       (t
+		(push (list 'not relation) negated-relations))))
     negated-relations))
 
 (defun get-chainable-negations(relations)
@@ -1998,8 +2015,8 @@
 
 (defun get-unchainable-relations (relation-list)
   (loop for relation in relation-list
-       when (unchainable? relation)
-       collect relation))
+     when (unchainable? relation)
+     collect relation))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Code to detect execution loops
@@ -2033,19 +2050,19 @@
 	(repeated? nil))
 
     (loop with matched-literals=nil
-	  for visited-state in visited-states
-	  while (not repeated?)
-	  do
-	  (setq matched-literals (pattern-match-literals state visited-state))
-	  (if (eq (length matched-literals)
-		  (length visited-state))
-	      (setq repeated? t)))
+       for visited-state in visited-states
+       while (not repeated?)
+       do
+	 (setq matched-literals (pattern-match-literals state visited-state))
+	 (if (eq (length matched-literals)
+		 (length visited-state))
+	     (setq repeated? t)))
     repeated?))
 
 (defun reset-loop-traces ()
   (setq execution-loop* nil)
-   (setf (problem-repeating-intentions (car gstm*)) nil)
-   (setf (problem-visited-states (car gstm*)) nil))
+  (setf (problem-repeating-intentions (car gstm*)) nil)
+  (setf (problem-visited-states (car gstm*)) nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; User interface functions (descended from compiler.lisp &
@@ -2057,9 +2074,9 @@
 ;; gstm*.
 (defmacro create-problems (&rest problem-forms)
   `(setf gstm* 
-    (loop for form in (quote ,problem-forms)
-     collect 
-     (make-problem-from-goal-literal-list form))))
+	 (loop for form in (quote ,problem-forms)
+	    collect 
+	      (make-problem-from-goal-literal-list form))))
 
 (defun pprob () (print-problems))
 
@@ -2105,7 +2122,7 @@
 	      (pprint-intention intent)
 	    finally
 	      (pprint-problem problem)))))
-	      
+
 (defun change-skill-selection-heuristic()
   (let ((heuristic-list (list 'MAXIMUM-EFFECTS-MATCHED
 			      'MINIMUM-UNSATISFIED-CONDITIONS)))
@@ -2114,9 +2131,9 @@
     (format t "~%~%*********************************")
     (format t "~%Here are the available heuristics:")
     (loop for i from 1
-	  for heuristic in heuristic-list
-	  do
-	  (format t "~%   ~a  ~a" i heuristic))
+       for heuristic in heuristic-list
+       do
+	 (format t "~%   ~a  ~a" i heuristic))
 
     ;; Prompt user and read selection
     (format t "~%Enter the number of the heuristic you want to select :")
@@ -2141,9 +2158,9 @@
     (format t "~%~%*********************************")
     (format t "~%Here are the available choices:")
     (loop for i from 1
-	  for option in options
-	  do
-	  (format t "~%   ~a  ~a" i option))
+       for option in options
+       do
+	 (format t "~%   ~a  ~a" i option))
 
     ;; Prompt user and read selection
     (format t "~%Enter your choice :")
