@@ -913,6 +913,13 @@
 		(random-choose all-match-bindings)))
 	t))))
 
+(defun weighted-random-choose (weights list &optional (random-num (random (apply '+ weights))) (running-total 0))
+  (cond ((or (null weights) (null list))
+	 nil)
+	((< random-num (+ (car weights) running-total))
+	 (car list))
+	(t
+	 (weighted-random-choose (cdr weights) (cdr list) random-num (+ (car weights) running-total)))))  
 
 (defun random-choose (list)
   (nth (random (length list)) list))
@@ -1386,26 +1393,35 @@
 	 (setq candidate-skills results))
 
     (when candidate-skills
-      (let ((max-effects-matched-set nil)
+      (let ((possible-skill-set nil)
+	    (possible-skill-weights nil)
+	    (max-effects-matched-set nil)
 	    (min-unsatisfied-conditions-set nil))
 	
 	(case search-direction*
-	  (:BACKWARD-NON-DETERMINISTIC
+	  (:BACKWARD-PROBABILISTIC
 	   (loop with best-triplets = nil
-	      with max-value = -1
+	      with total-weight = 0
 	      for triplet in candidate-skills
 	      for current-value = (max-effects-matched-heuristic (butlast triplet) problem)
 	      do
 		(cond 
-		  ((< max-value current-value)
-		   (setq max-value current-value
-			 best-triplets (list triplet)))
-		  ((= max-value current-value)
-		   (push triplet best-triplets)))
+		  ((< 0 current-value)
+		   (setq total-weight (+ total-weight current-value))		   
+		   (setq max-value current-value)
+		   (print "HELLO!!!\n\n\n\n----------------------\n\n\n")
+		   ;(setq possible-skill-set (cons (list triplet) possible-skill-set))
+		   (push triplet possible-skill-set)
+		   (print possible-skill-set)
+		   
+
+		   (push current-value possible-skill-weights)
+		   (print possible-skill-weights)
+
+		   ))
 	      finally
-		(setq max-effects-matched-set best-triplets)
-		(if max-effects-matched-set
-		    (setq selected-triple (random-choose max-effects-matched-set)))))
+		(if possible-skill-set
+		    (setq selected-triple (weighted-random-choose possible-skill-weights possible-skill-set)))))
 	  
 	  (:BACKWARD
 	   (loop with best-triplets = nil
@@ -2152,7 +2168,8 @@
 
 (defun set-search-direction()
   (let ((options (list 'BACKWARD
-		       'FORWARD)))
+		       'FORWARD
+		       'BACKWARD-PROBABILISTIC)))
 
     ;; Print the available options
     (format t "~%~%*********************************")
@@ -2175,7 +2192,11 @@
 		   ((= choice 2)
 		    (setq search-direction* :FORWARD)
 		    (setq skill-selection-heuristic* :MIN-UNSATISFIED-CONDITIONS)
-		    (format t "~%Search direction set to forward."))))
+		    (format t "~%Search direction set to forward."))
+		   ((= choice 1)
+		    (setq search-direction* :BACKWARD-PROBABILISTIC)
+		    (setq skill-selection-heuristic* :MAX-EFFECTS-MATCHED)
+		    (format t "~%Search direction set to backward-probabilistic."))))
 	    (t
 	     (format t "~%~%INVALID CHOICE! TRY AGAIN."))))))
 
