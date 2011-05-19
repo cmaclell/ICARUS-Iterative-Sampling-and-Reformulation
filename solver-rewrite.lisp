@@ -31,6 +31,11 @@
 ;;    2. :FORWARD
 (defparameter search-direction* :BACKWARD)
 
+;; There are two possible search methods for this global switch:
+;;    1. :ITERATIVE-SAMPLING (default)
+;;    2. :SYSTEMATIC
+(defparameter search-method* :ITERATIVE-SAMPLING)
+
 ;; There are three possible options for this global switch:
 ;;    1. :MAX-EFFECTS-MATCHED (default)
 ;;    2. :MIN-UNSATISFIED-CONDITIONS
@@ -1234,8 +1239,11 @@
 
 	 ;;Select a backtracking mechanism here (backtrack to parent or to root).
 	 ;;Backtracking to the root can be used for iterative sampling.
-					;(backtrack-to-parent-problem problem))
-	 (backtrack-to-root-problem problem))
+	 (case search-method*
+	   (:ITERATIVE-SAMPLING
+	    (backtrack-to-root-problem problem))
+	   (:SYSTEMATIC
+	    (backtrack-to-parent-problem problem))))
 	
 	((null (car result))
 	 ;; This means that bindings were successfully found for a problem that has unsatisfied goals.
@@ -2166,6 +2174,33 @@
 	    (t
 	     (format t "~%~%INVALID CHOICE! TRY AGAIN."))))))
 
+(defun change-search-method()
+  (let ((options (list 'ITERATIVE-SAMPLING
+		       'SYSTEMATIC)))
+    ;; Print the available options
+    (format t "~%~%*********************************")
+    (format t "~%Here are the available choices:")
+    (loop for i from 1
+       for option in options
+       do
+	 (format t "~%   ~a  ~a" i option))
+    
+    ;; Prompt user and read selection
+    (format t "~%Enter your choice :")
+    (let ((choice (read)))
+      (cond ((and (numberp choice)
+		  (> choice 0)
+		  (<= choice (length options)))
+	     (cond ((= choice 1)
+		    (setq search-method* :ITERATIVE-SAMPLING)		    
+		    (format t "~%Search method set to iterative sampling."))
+		   ((= choice 2)
+		    (setq search-method* :SYSTEMATIC)
+		    (format t "~%Search method set to systematic.")))
+	    (t
+	     (format t "~%~%INVALID CHOICE! TRY AGAIN.")))))))
+    
+
 (defun set-search-direction()
   (let ((options (list 'BACKWARD
 		       'FORWARD
@@ -2188,14 +2223,17 @@
 	     (cond ((= choice 1)
 		    (setq search-direction* :BACKWARD)
 		    (setq skill-selection-heuristic* :MAX-EFFECTS-MATCHED)
+		    (setq search-method* :SYSTEMATIC)
 		    (format t "~%Search direction set to backward."))
 		   ((= choice 2)
 		    (setq search-direction* :FORWARD)
 		    (setq skill-selection-heuristic* :MIN-UNSATISFIED-CONDITIONS)
+		    (setq search-method* :SYSTEMATIC)
 		    (format t "~%Search direction set to forward."))
-		   ((= choice 1)
+		   ((= choice 3)
 		    (setq search-direction* :BACKWARD-PROBABILISTIC)
 		    (setq skill-selection-heuristic* :MAX-EFFECTS-MATCHED)
+		    (setq search-method* :ITERATIVE-SAMPLING)
 		    (format t "~%Search direction set to backward-probabilistic."))))
 	    (t
 	     (format t "~%~%INVALID CHOICE! TRY AGAIN."))))))
