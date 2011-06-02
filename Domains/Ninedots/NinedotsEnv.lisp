@@ -48,8 +48,12 @@
 ; Define an action for placing the pendown
 (defun *place-pen-down (pen)
   (let* ((object (assoc 'pen state*))
+	 (pen-xpos 'xpos object)
+	 (pen-ypos 'ypos object)
 	 (status (member 'status object)))
-    (setf (cadr status) 'down)))
+    (setf (cadr status) 'down)
+    (push `(ink ,int-num* xpos ,(cadr pen-xpos) ypos ,(cadr pen-ypos)) state*)
+    (incf ink-num*)))
 
 ; Define an action for lifting the pen
 (defun *lift-pen-up (pen)

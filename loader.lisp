@@ -4,7 +4,9 @@
 (load "icarus")
 
 (defparameter *domain-map*
-  (list (list "Blocks World"
+  (list (list "Ninedots"
+	      "Domains/Ninedots/loader-ninedots")
+	(list "Blocks World"
 	      "Domains/Blocksworld/loader-blocks")
 	(list "Blocks World Step"
 	      "Domains/Blocksworld-Step/loader-step")
