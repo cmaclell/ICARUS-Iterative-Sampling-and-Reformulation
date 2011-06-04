@@ -31,7 +31,7 @@
 		    (crossed g6)
 		    (crossed g7)
 		    (crossed g8)
-)		    (crossed g9)))
+		    (crossed g9))))
   
 ; Define a function that Icarus will call to initialize the environment.
 (defun initialize-world ()
@@ -45,19 +45,19 @@
 ; Define a function that Icarus will call to update the perceptual buffer.
 (defun preattend () (copy-list state*))
 
-; Define an action for placing the pendown
+; Define an action for placing the pen down
 (defun *place-pen-down (pen)
+  ;;shouldn't we seach for the pen that has the name as the variable name? -CM
   (let* ((object (assoc 'pen state*))
-	 (pen-xpos 'xpos object)
-	 (pen-ypos 'ypos object)
+	 (pen-xpos (member 'xpos object))
+	 (pen-ypos (member 'ypos object))
 	 (status (member 'status object)))
     (setf (cadr status) 'down)
-    (push `(ink ,int-num* xpos ,(cadr pen-xpos) ypos ,(cadr pen-ypos)) state*)
+    (push `(ink ,ink-num* xpos ,(cadr pen-xpos) ypos ,(cadr pen-ypos)) state*)
     (incf ink-num*)))
 
 ; Define an action for lifting the pen
-(defun *lift-pen-up (pen)
-  (let* ((object (assoc 'pen state*))
+(defun *lift-pen-up (pen)  (let* ((object (assoc 'pen state*))
 	 (status (member 'status object)))
     (setf (cadr status) 'up)))
 

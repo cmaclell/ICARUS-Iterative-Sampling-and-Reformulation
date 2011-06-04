@@ -1417,6 +1417,7 @@
 		  ((< 0 current-value)
 		   (setq total-weight (+ total-weight current-value))		   
 		   (setq max-value current-value)
+		   ;;Can't remember why I thought this was an important place in the code but I'll leave it for now. -CM
 		   (print "HELLO!!!\n\n\n\n----------------------\n\n\n")
 		   ;(setq possible-skill-set (cons (list triplet) possible-skill-set))
 		   (push triplet possible-skill-set)
