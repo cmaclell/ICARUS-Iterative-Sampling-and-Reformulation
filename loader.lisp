@@ -3,6 +3,15 @@
 
 (load "icarus")
 
+(defmacro ex (skill)
+  "Execute a skill, and reset the scene."
+  `(progn (execute-skill ,skill)))
+
+(defmacro ex+ (skill)
+  "Execute a skill, and reset the scene."
+  `(progn (execute-skill+ ,skill)))
+
+
 (defparameter *domain-map*
   (list (list "Ninedots"
 	      "Domains/Ninedots/loader-ninedots")
