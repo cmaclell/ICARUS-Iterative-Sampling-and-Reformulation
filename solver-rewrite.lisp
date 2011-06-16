@@ -26,6 +26,8 @@
 (defparameter pos-unchainable-conditions* nil)
 (defparameter neg-unchainable-conditions* nil)
 
+(defparameter abduce-more-goals* t)
+
 ;; There are three possible options for this global switch:
 ;;    1. :BACKWARD (default)
 ;;    2. :FORWARD
@@ -124,7 +126,34 @@
   problem 
   status)
 
+;; Function to convert icarus concepts to abra rules for use with
+;; the abra abductive inference engine.
+;; TODO: this currently ignores percepts and tests... I'm unsure
+;;       how to include these. -CM
+;; USAGE: usually called with (icarus-concepts-to-abra-rules cltm*)
+(defun icarus-concepts-to-abra-rules (icarus-concepts)
+  (let ((abra-rules nil))
+    (loop for concept in icarus-concepts do
+	 (if (and (concept-relations concept))
+	     (push `(=> (and ,(concept-relations concept)) ,(concept-head concept)) abra-rules)))
+    abra-rules))
+
+
+;; modified to expand the goal literals using abduction when
+;; abduce-more-goals* is true.
 (defun make-problem-from-goal-literal-list (list-of-goal-literals)
+
+  ;; if abduce-more-goals* is true this sets the list of goal literals to
+  ;; the list of goal literals plus the literals that can be abductively infered from said list.
+  (cond (abduce-more-goals*
+	 (print "Abductively expanding goals...")
+	 (print list-of-goal-literals)
+	 (print (icarus-concepts-to-abra-rules cltm*))
+	 (print (test-fixed-point list-of-goal-literals (icarus-concepts-to-abra-rules cltm*)))
+	 (setf list-of-goal-literals (append list-of-goal-literals (test-fixed-point list-of-goal-literals (icarus-concepts-to-abra-rules cltm*))))))
+
+  
+
   (loop with new-problem = (make-problem)
      for objective in list-of-goal-literals
      for new-goal = (make-goal :objective objective)
@@ -1418,14 +1447,14 @@
 		   (setq total-weight (+ total-weight current-value))		   
 		   (setq max-value current-value)
 		   ;;Can't remember why I thought this was an important place in the code but I'll leave it for now. -CM
-		   (print "HELLO!!!\n\n\n\n----------------------\n\n\n")
+		   ;(print "HELLO!!!\n\n\n\n----------------------\n\n\n")
 		   ;(setq possible-skill-set (cons (list triplet) possible-skill-set))
 		   (push triplet possible-skill-set)
-		   (print possible-skill-set)
+		   ;(print possible-skill-set)
 		   
 
 		   (push current-value possible-skill-weights)
-		   (print possible-skill-weights)
+		   ;(print possible-skill-weights)
 
 		   ))
 	      finally

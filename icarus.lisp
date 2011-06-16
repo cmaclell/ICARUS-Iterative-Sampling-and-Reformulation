@@ -16,3 +16,4 @@
 (load "Unification")                    ; unification code adapted from Norvig
 (load "solver-rewrite")			; main routines for rewritten solver
 
+(load "load-abra")                      ; abductive inference code

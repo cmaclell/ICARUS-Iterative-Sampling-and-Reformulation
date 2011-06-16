@@ -76,7 +76,7 @@
 ;; infer
 ;;
 ;; runs a single inference step, selecting a belief according to :pick-belief.
-(defun infer (wm kb &key (w (wm-prime wm)) (bc-only? nil) (focused? nil) (p -1.0)
+(defun abra-infer (wm kb &key (w (wm-prime wm)) (bc-only? nil) (focused? nil) (p -1.0)
 	                 (pick-belief #'pick-belief-random) (deduction? nil))
   ;; get a world--belief tuple to explain
   (let* ((wb (funcall pick-belief wm kb :world w)) 

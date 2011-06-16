@@ -105,12 +105,10 @@
   (output-dot wm :show-worlds? nil))
 
 
-(defparameter *a1* '((A 1) (B 1)))
+(defparameter *a1* '((A) (B)))
 (defparameter *simple-rules* '(
-(=> (and (B ?a) (C ?a))
-    (A ?a))
-(=> (D ?a)
-    (C ?a))
+(=> (and (B) (C))
+    (A))
 	))
 
 
@@ -124,7 +122,7 @@
   (test-one-init rules example)
   (let ((assumptions nil))
     (loop
-       (dotimes (i 10) (infer wm kb
+       (dotimes (i 10) (abra-infer wm kb
 	      :bc-only? nil
 	      :focused? nil :p -1
 	      :pick-belief pb
@@ -135,7 +133,7 @@
 
 (defun test-one (steps example rules &optional (pb #'pick-belief-fewrules-unattached) (d? nil) (print? t))
   (test-one-init rules example)
-  (dotimes (i steps) (infer wm kb
+  (dotimes (i steps) (abra-infer wm kb
 			    :bc-only? nil
 			    :focused? nil :p -1
 			    :pick-belief pb
@@ -144,14 +142,14 @@
 
 (defun inc-test-one (steps example rules &optional (plot? nil) (pb #'pick-belief-fewrules-unattached) (d? nil))
   (test-one-init rules (list (first example)))
-  (dotimes (i steps) (infer wm kb :bc-only? nil
+  (dotimes (i steps) (abra-infer wm kb :bc-only? nil
 			    :focused? nil :p -1
 			    :pick-belief pb
 			    :deduction? d?))
   
   (dolist (f (rest example))
     (add-facts (list f) 'story wm)
-    (dotimes (i steps) (infer wm kb :bc-only? nil
+    (dotimes (i steps) (abra-infer wm kb :bc-only? nil
 			    :focused? nil :p -1
 			    :pick-belief pb
 			    :deduction? d?))
@@ -161,7 +159,7 @@
 
 (defun continue-one (steps facts &optional (pb #'pick-belief-fewrules-unattached) (d? nil))
   (add-facts facts 'story wm)
-  (dotimes (i steps) (infer wm kb 
+  (dotimes (i steps) (abra-infer wm kb 
 			    :bc-only? nil
 			    :focused? nil
 			    :p -1 
@@ -173,7 +171,7 @@
 	     (declare (ignore a b world))
 	     (find blf-id (get-agent-beliefs (wm-prime wm)) 
 		   :key #'(lambda (x) (belief-id (second x))))))
-    (infer wm kb 
+    (abra-infer wm kb 
 	   :bc-only? nil
 	   :focused? nil
 	   :p -1 

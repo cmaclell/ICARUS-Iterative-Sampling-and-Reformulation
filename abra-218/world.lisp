@@ -273,7 +273,8 @@
 ;;;
 ;;; returns the new belief.
 (defun believe (lit wrld &optional (fact nil))
-  (when (= (length lit) 1) (break))
+  ;not sure why this causes a break here -CM
+;  (when (= (length lit) 1) (break))
   (let ((b (make-belief :content lit :fact fact :start (get-universal-time))))
     (ec-add-element b #'belief-content #'belief-id (world-elmnts wrld))))
 

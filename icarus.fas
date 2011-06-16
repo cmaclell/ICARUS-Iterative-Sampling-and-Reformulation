@@ -24,3 +24,7 @@
    #15Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 19 01)
    ("solver-rewrite" |COMMON-LISP|::|LOAD|)
    (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
+#Y(#:|17 19 (LOAD "load-abra")-7|
+   #15Y(00 00 00 00 00 00 00 00 20 01 DA 2F 01 19 01)
+   ("load-abra" |COMMON-LISP|::|LOAD|)
+   (|COMMON-LISP|::|T| |COMMON-LISP|::|T| |COMMON-LISP|::|T|))
