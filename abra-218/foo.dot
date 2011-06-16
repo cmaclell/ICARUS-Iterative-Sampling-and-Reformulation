@@ -1,0 +1,26 @@
+digraph G {
+size="10,10";concentrate=true;rankdir=LR;edge[dir=none];ranksep="0.9";
+clusterrank=global;
+subgraph clusterSTORY {
+label = "STORY"; color=black;
+edge[dir=none];
+B2 [label="(B 1)"];
+B1 [label="(A 1)"];
+}
+subgraph clusterSELFGOAL {
+label = "SELF.GOAL"; color=black;
+edge[dir=none];
+}
+subgraph clusterSELFINTENTIONS {
+label = "SELF.INTENTIONS"; color=black;
+edge[dir=none];
+}
+subgraph clusterSELF {
+label = "SELF"; color=black;
+edge[dir=none];
+B3 [label="(C 1)"];
+}
+B2 -> B1;
+B3 -> B1;
+B3 -> B2;
+}

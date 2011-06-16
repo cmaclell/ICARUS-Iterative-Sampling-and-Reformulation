@@ -1,0 +1,59 @@
+digraph G {
+size="10,10";concentrate=true;rankdir=LR;edge[dir=none];ranksep="0.9";
+clusterrank=global;
+subgraph clusterSTORY {
+label = "STORY"; color=black;
+edge[dir=none];
+B11 [label="(OWN O6 LS6)"];
+B10 [label="(PATIENT-POINT POINT6 O6)"];
+B9 [label="(GUN GUN6)"];
+B8 [label="(INSTR-POINT POINT6 GUN6)"];
+B7 [label="(AGENT-POINT POINT6 BILL6)"];
+B6 [label="(POINTING POINT6)"];
+B5 [label="(LIQUOR-STORE LS6)"];
+B4 [label="(DEST-GO GO6 LS6)"];
+B3 [label="(NAME BILL6 BILL)"];
+B2 [label="(GOER GO6 BILL6)"];
+B1 [label="(GOING GO6)"];
+}
+subgraph clusterSELFGOAL {
+label = "SELF.GOAL"; color=black;
+edge[dir=none];
+}
+subgraph clusterSELFINTENTIONS {
+label = "SELF.INTENTIONS"; color=black;
+edge[dir=none];
+}
+subgraph clusterSELF {
+label = "SELF"; color=black;
+edge[dir=none];
+B13 -> B14;
+B13 -> B15;
+B13 -> B16;
+B12 -> B14;
+B12 -> B15;
+B12 -> B16;
+B12 -> B13;
+B17 -> B18;
+B18 [label="(STORE SK39 LS6)"];
+B17 [label="(LIQST-SHOPPING SK39)"];
+B16 [label="(ROBBER SK61 BILL6)"];
+B15 [label="(WEAPON-ROB SK67 GUN6)"];
+B14 [label="(VICTIM-ROB SK64 O6)"];
+B13 [label="(POINT-WEAPON-STEP SK64 POINT6)"];
+B12 [label="(ROBBING SK64)"];
+}
+B17 -> B5;
+B18 -> B5;
+B16 -> B7;
+B15 -> B8;
+B12 -> B6;
+B12 -> B7;
+B12 -> B8;
+B12 -> B10;
+B13 -> B6;
+B13 -> B7;
+B13 -> B8;
+B13 -> B10;
+B14 -> B10;
+}
