@@ -26,7 +26,7 @@
 (defparameter pos-unchainable-conditions* nil)
 (defparameter neg-unchainable-conditions* nil)
 
-(defparameter abduce-more-goals* t)
+(defparameter abduce-more-goals* nil)
 
 ;; There are three possible options for this global switch:
 ;;    1. :BACKWARD (default)
@@ -151,7 +151,6 @@
 	 (print (icarus-concepts-to-abra-rules cltm*))
 	 (print (test-fixed-point list-of-goal-literals (icarus-concepts-to-abra-rules cltm*)))
 	 (setf list-of-goal-literals (append list-of-goal-literals (test-fixed-point list-of-goal-literals (icarus-concepts-to-abra-rules cltm*))))))
-
   
 
   (loop with new-problem = (make-problem)
